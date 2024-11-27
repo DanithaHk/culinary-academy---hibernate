@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.ormcoursework.controller.LoginController">
+    <AnchorPane fx:id="rootNode" accessibleRole="TEXT_FIELD" prefHeight="544.0" prefWidth="420.0" style="-fx-background-color: white;">
+        <children>
+            <ImageView fitHeight="601.0" fitWidth="500.0">
+                <image>
+                    <Image url="@../asserts.img/19854.jpg" />
+                </image>
+            </ImageView>
+            <Label layoutX="112.0" layoutY="218.0" text="Username">
+            <font>
+               <Font size="13.0" />
+            </font></Label>
+            <Label layoutX="172.0" layoutY="154.0" text="THE CULINARY" textFill="#020d1b">
+                <font>
+                    <Font name="System Bold" size="22.0" />
+                </font>
+            </Label>
+            <Label layoutX="224.0" layoutY="186.0" text="Academy">
+                <font>
+                    <Font name="System Bold" size="12.0" />
+                </font>
+            </Label>
+            <Label layoutX="211.0" layoutY="135.0" text="WELCOME TO" textAlignment="CENTER" textFill="#2c2b2b">
+                <font>
+                    <Font name="Unispace-Bold" size="13.0" />
+                </font>
+            </Label>
+            <TextField fx:id="txtUserName" layoutX="111.0" layoutY="244.0" prefHeight="32.0" prefWidth="278.0" promptText="Username">
+                <styleClass>
+                    <String fx:value="edge-button" />
+                    <String fx:value="edge-button" />
+                </styleClass>
+            </TextField>
+            <Label layoutX="113.0" layoutY="290.0" text="Password">
+            <font>
+               <Font size="13.0" />
+            </font></Label>
+            <JFXButton blendMode="SRC_ATOP" buttonType="RAISED" cache="true" graphicTextGap="9.0" layoutX="124.0" layoutY="391.0" onAction="#btnLoginOnAction" prefHeight="32.0" prefWidth="256.0" style="-fx-background-color: #0077b6;" styleClass="edge button" text="Login" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+                <effect>
+                    <Glow />
+                </effect>
+                <graphic>
+                    <ImageView fitHeight="18.0" fitWidth="24.0">
+                        <image>
+                            <Image url="@../asserts.icon/icons8-login-96.png" />
+                        </image>
+                    </ImageView>
+                </graphic>
+            </JFXButton>
+            <Label layoutX="113.0" layoutY="353.0" text="Froget Password" textFill="#39464a" />
+            <Hyperlink layoutX="211.0" layoutY="350.0" onAction="#linkFrogetPasswordOnAction" prefHeight="17.0" prefWidth="65.0" text="Click Here" textFill="#04195e" />
+            <PasswordField fx:id="txtPassword" layoutX="113.0" layoutY="315.0" prefHeight="32.0" prefWidth="278.0" promptText="Password" />
+         <ImageView fitHeight="169.0" fitWidth="197.0" layoutX="157.0" layoutY="2.0">
+            <image>
+               <Image url="@../asserts.img/logo_black-removebg-preview.png" />
+            </image>
+         </ImageView>
+        </children>
+    </AnchorPane>
+   <ImageView fitHeight="601.0" fitWidth="500.0" layoutX="500.0">
+      <image>
+         <Image url="@../asserts.img/Red%20Pink%20Illustrated%20International%20Chef's%20Day%20Instagram%20Post2.png" />
+      </image>
+      <effect>
+         <InnerShadow blurType="GAUSSIAN" height="10.0" radius="6.75" width="19.0" />
+      </effect>
+   </ImageView>
+</AnchorPane>
