@@ -27,4 +27,5 @@ public interface EnrollmentBO extends SuperBO {
     double getRemainingFeeByEnrollmentId(String eid);
 
     boolean updateRemainingFee(String eid, double updatedRemainFee);
+    int getEnrollmentCount() throws SQLException;
 }

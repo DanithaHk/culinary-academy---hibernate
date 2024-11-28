@@ -97,4 +97,9 @@ public class EnrollmentBOImpl implements EnrollmentBO {
     public boolean updateRemainingFee(String enrollmentId, double newFee) {
         return enrollmentDAO.updateRemainingFee(enrollmentId,newFee);
     }
+
+    @Override
+    public int getEnrollmentCount() throws SQLException {
+        return enrollmentDAO.getEnrollmentCount();
+    }
 }

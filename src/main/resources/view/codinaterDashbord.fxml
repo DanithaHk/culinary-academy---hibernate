@@ -144,15 +144,15 @@
                     <Font name="System Bold" size="20.0" />
                 </font>
             </Label>
-         <Label fx:id="lblCusStudent" layoutX="798.0" layoutY="114.0" prefHeight="35.0" prefWidth="66.0" textAlignment="CENTER" textFill="#1f2881">
-            <font>
-               <Font name="System Bold" size="24.0" />
-            </font>
-         </Label>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="114.0" layoutX="670.0" layoutY="65.0" stroke="BLACK" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="0.0" width="263.0" />
          <Label layoutX="765.0" layoutY="86.0" text="Student Count" textFill="#1f2881">
             <font>
                <Font name="System Bold" size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lblCusCount" layoutX="798.0" layoutY="114.0" prefHeight="35.0" prefWidth="66.0" textAlignment="CENTER" textFill="#1f2881">
+            <font>
+               <Font name="System Bold" size="24.0" />
             </font>
          </Label>
          <ImageView fitHeight="97.0" fitWidth="100.0" layoutX="655.0" layoutY="74.0">
@@ -166,7 +166,7 @@
                <Font name="System Bold" size="18.0" />
             </font>
          </Label>
-         <Label fx:id="lblEnrolment" contentDisplay="CENTER" layoutX="764.0" layoutY="350.0" prefHeight="44.0" prefWidth="146.0" textAlignment="CENTER" textFill="#1f2881">
+         <Label fx:id="lblAmount" contentDisplay="CENTER" layoutX="798.0" layoutY="350.0" prefHeight="44.0" prefWidth="66.0" textAlignment="CENTER" textFill="#1f2881">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>

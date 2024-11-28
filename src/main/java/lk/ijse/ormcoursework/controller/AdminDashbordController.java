@@ -4,22 +4,31 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.ormcoursework.bo.BOFactory;
+import lk.ijse.ormcoursework.bo.custom.EnrollmentBO;
+import lk.ijse.ormcoursework.bo.custom.ProgramsBO;
+import lk.ijse.ormcoursework.bo.custom.StudentBO;
+import lk.ijse.ormcoursework.dto.ProgramsDto;
+import lk.ijse.ormcoursework.tm.ProgramsTm;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class AdminDashbordController {
 
@@ -54,11 +63,61 @@ public class AdminDashbordController {
     private AnchorPane root;
 
     @FXML
-    private TableView<?> tblVan;
+    private TableView<ProgramsTm> tblVan;
 
+    StudentBO studentBO = (StudentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.STUDENT);
+    EnrollmentBO enrollmentBO = (EnrollmentBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.ENROLLMENT);
+
+    ProgramsBO programsBO = (ProgramsBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.PROGRAMS);
     public void initialize(){
         initClock();
+        setCellValueFactory();
+        try {
+            int studentCount = studentBO.getStudentCount();
+            lblCusCount.setText(String.valueOf(studentCount));
+
+            int enrolmentCount = enrollmentBO.getEnrollmentCount();
+            lblAmount.setText(String.valueOf(enrolmentCount));
+
+            loadAllPrograms();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    private void setCellValueFactory() {
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colVanId.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDay.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        colRoute.setCellValueFactory(new PropertyValueFactory<>("fee"));
+
+    }
+
+    private void loadAllPrograms() {
+        ObservableList<ProgramsTm> obList = FXCollections.observableArrayList();
+
+        try {
+            List<ProgramsDto> programsList = programsBO.getAllPrograms();
+
+            for (ProgramsDto programsDto : programsList) {
+
+                ProgramsTm programsTm = new ProgramsTm(
+                        programsDto.getId(),
+                        programsDto.getName(),
+                        programsDto.getDuration(),
+                        programsDto.getFee()
+                );
+
+                obList.add(programsTm);
+            }
+
+            tblVan.setItems(obList);
+
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR, "Error loading programss: " + e.getMessage(), ButtonType.OK).show();
+        }
+    }
+
     @FXML
     void btnCoursesOnAction(ActionEvent event) throws IOException {
         URL resource = getClass().getResource("/view/course.fxml");

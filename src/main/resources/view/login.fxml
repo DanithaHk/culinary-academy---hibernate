@@ -8,7 +8,6 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -81,10 +80,7 @@
     </AnchorPane>
    <ImageView fitHeight="601.0" fitWidth="500.0" layoutX="500.0">
       <image>
-         <Image url="@../asserts.img/Red%20Pink%20Illustrated%20International%20Chef's%20Day%20Instagram%20Post2.png" />
+         <Image url="@../asserts.img/Red%20Pink%20Illustrated%20International%20Chef's%20Day%20Instagram%20Post%20NEW.png" />
       </image>
-      <effect>
-         <InnerShadow blurType="GAUSSIAN" height="10.0" radius="6.75" width="19.0" />
-      </effect>
    </ImageView>
 </AnchorPane>
