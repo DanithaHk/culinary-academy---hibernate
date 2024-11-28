@@ -1,5 +1,8 @@
 package lk.ijse.ormcoursework.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lk.ijse.ormcoursework.bo.BOFactory;
 import lk.ijse.ormcoursework.bo.custom.ProgramsBO;
 import lk.ijse.ormcoursework.dto.ProgramsDto;
@@ -15,6 +19,7 @@ import lk.ijse.ormcoursework.tm.ProgramsTm;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class CoursesController {
 
@@ -124,18 +129,23 @@ public class CoursesController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean isSaved = programsBO.save(new ProgramsDto(
-                txtId.getText(),
-                txtName.getText(),
-                txtDuration.getText(),
-                Double.valueOf(txtFee.getText())
-        ));
-        if (isSaved) {
-            loadAllPrograms();
-            clearFields();
-            new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+
+        boolean isValidate = validatePrograms();
+
+        if (isValidate) {
+            boolean isSaved = programsBO.save(new ProgramsDto(
+                    txtId.getText(),
+                    txtName.getText(),
+                    txtDuration.getText(),
+                    Double.valueOf(txtFee.getText())
+            ));
+            if (isSaved) {
+                loadAllPrograms();
+                clearFields();
+                new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+            }
         }
     }
 
@@ -165,6 +175,70 @@ public class CoursesController {
     @FXML
     void txtSearchOnAction(ActionEvent event) {
 
+    }
+    private boolean validatePrograms() {
+        int num=0;
+        String id = txtId.getText();
+        boolean isIDValidate= Pattern.matches("(CA)[0-9]{3,7}",id);
+        if (!isIDValidate){
+            num=1;
+            vibrateTextField(txtId);
+        }
+
+        String name=txtName.getText();
+        boolean isNameValidate= Pattern.matches("[A-z ]{3,}",name);
+        if (!isNameValidate){
+            num=1;
+            vibrateTextField(txtName);
+        }
+
+        String duration=txtDuration.getText();
+        boolean isDurationValidate= Pattern.matches("[A-z 0-9]{3,}",duration);
+        if (!isDurationValidate){
+            num=1;
+            vibrateTextField(txtDuration);
+        }
+
+
+        String fee=txtFee.getText();
+        boolean isFeeValidate= Pattern.matches("[0-9 .]{3,}",fee);
+        if (!isFeeValidate){
+            num=1;
+            vibrateTextField(txtFee);
+        }
+
+        if(num==1){
+            num=0;
+            return false;
+        }else {
+            num=0;
+            return true;
+
+        }
+    }
+
+    private void vibrateTextField(TextField textField) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(textField.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(50), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(100), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(150), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(200), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(250), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(300), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(350), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(400), new KeyValue(textField.translateXProperty(), 0))
+
+        );
+
+        textField.setStyle("-fx-border-color: red;");
+        timeline.play();
+
+        Timeline timeline1 = new Timeline(
+                new KeyFrame(Duration.seconds(3), new KeyValue(textField.styleProperty(), "-fx-border-color: #bde0fe;"))
+        );
+
+        timeline1.play();
     }
 
 }

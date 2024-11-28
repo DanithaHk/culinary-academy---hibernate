@@ -1,5 +1,8 @@
 package lk.ijse.ormcoursework.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lk.ijse.ormcoursework.Utill.PasswordEncrypt;
 import lk.ijse.ormcoursework.Utill.PasswordVerifier;
 import lk.ijse.ormcoursework.bo.BOFactory;
@@ -19,6 +23,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class UserController {
 
@@ -137,7 +142,9 @@ public class UserController {
         String name = txtName.getText();
         String password = txtPassword.getText();
         String role =  cmbRole.getValue();
+        boolean isValidate = validateUser();
 
+        if (isValidate) {
             boolean isSaved = userBO.save(new UserDto(
                     id,
                     name,
@@ -151,6 +158,7 @@ public class UserController {
             } else {
                 new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
             }
+        }
         }
 
 
@@ -171,4 +179,61 @@ public class UserController {
 
     }
 
+    private void vibrateTextField(TextField textField) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(textField.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(50), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(100), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(150), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(200), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(250), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(300), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(350), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(400), new KeyValue(textField.translateXProperty(), 0))
+
+        );
+
+        textField.setStyle("-fx-border-color: red;");
+        timeline.play();
+
+        Timeline timeline1 = new Timeline(
+                new KeyFrame(Duration.seconds(3), new KeyValue(textField.styleProperty(), "-fx-border-color: #bde0fe;"))
+        );
+
+        timeline1.play();
+    } private boolean validateUser() {
+        int num=0;
+        String userId = txtId.getText();
+        boolean isIDValidate= Pattern.matches("[0-9]{2,7}",userId);
+        if (!isIDValidate){
+            num=1;
+            vibrateTextField(txtId);
+        }
+
+        String name=txtName.getText();
+        boolean isNameValidate= Pattern.matches("[A-z ]{3,}",name);
+        if (!isNameValidate){
+            num=1;
+            vibrateTextField(txtName);
+        }
+
+        String password=txtPassword.getText();
+        boolean isDurationValidate= Pattern.matches("[A-z 0-9]{3,}",password);
+        if (!isDurationValidate){
+            num=1;
+            vibrateTextField(txtPassword);
+        }
+
+
+
+
+        if(num==1){
+            num=0;
+            return false;
+        }else {
+            num=0;
+            return true;
+
+        }
+    }
 }
