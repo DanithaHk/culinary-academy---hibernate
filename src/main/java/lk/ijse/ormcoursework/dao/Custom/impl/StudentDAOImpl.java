@@ -70,4 +70,21 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
 
+    @Override
+    public Student getStudentById(String sid) {
+        Session session = SessionFactoryConfig.getInstance().getSession();
+        Transaction tx = session.beginTransaction();
+
+        try {
+            Student student = session.get(Student.class, sid);
+            tx.commit();
+            return student;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
 }

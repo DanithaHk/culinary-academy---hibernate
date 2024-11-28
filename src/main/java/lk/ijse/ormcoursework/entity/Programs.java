@@ -2,6 +2,9 @@ package lk.ijse.ormcoursework.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "programs")
 public class Programs  {
@@ -16,12 +19,25 @@ public class Programs  {
     private String duration;
 
     @Column(name = "fee")
-    private String fee;
+    private double fee;
+
+    @OneToMany(mappedBy = "programs", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    private List<Enrollment> enrollmentList = new ArrayList<>();
+
+    public void addEnrollment(Enrollment enrollment) {
+        enrollmentList.add(enrollment);
+        enrollment.setPrograms(this);  // This ensures the enrollment knows about the course
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollmentList.remove(enrollment);
+        enrollment.setPrograms(null); // Break the relationship
+    }
 
     public Programs() {
     }
 
-    public Programs(String id, String name, String duration, String fee) {
+    public Programs(String id, String name, String duration, double fee) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -52,11 +68,11 @@ public class Programs  {
         this.duration = duration;
     }
 
-    public String getFee() {
+    public double getFee() {
         return fee;
     }
 
-    public void setFee(String fee) {
+    public void setFee(double fee) {
         this.fee = fee;
     }
 

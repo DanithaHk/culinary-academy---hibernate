@@ -3,17 +3,20 @@ package lk.ijse.ormcoursework.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import lk.ijse.ormcoursework.Utill.PasswordVerifier;
 import lk.ijse.ormcoursework.bo.BOFactory;
 import lk.ijse.ormcoursework.bo.custom.UserBO;
 import lk.ijse.ormcoursework.dao.Custom.UserDAO;
 import lk.ijse.ormcoursework.dao.DAOFactory;
 import lk.ijse.ormcoursework.entity.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -32,27 +35,47 @@ public class LoginController {
     private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOTypes.USER);
     UserDAO userDAO = (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.USER);
 
+
     @FXML
     void btnLoginOnAction(ActionEvent event) {
         String username = txtUserName.getText();
         String password = txtPassword.getText();
 
+//        String dbpw= userBO.findUserByname(username).getPassword();
         try {
-            if (userDAO.checkPassword(username,password)) {
+//            if (PasswordVerifier.verifyPassword(password,dbpw)){
+            if (userDAO.checkPassword(username,password)){
+                if (userBO.findUserByname(username).getRole().equals("Admin")) {
+                    AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/adminDashbord.fxml"));
 
-                AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/adminDashbord.fxml"));
+                    Scene scene = new Scene(rootNode);
 
-                Scene scene = new Scene(rootNode);
+                    Stage stage = (Stage) this.rootNode.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.centerOnScreen();
+                    stage.setTitle("Dashboard Form");
 
-                Stage stage = (Stage) this.rootNode.getScene().getWindow();
-                stage.setScene(scene);
-                stage.centerOnScreen();
-                stage.setTitle("Dashboard Form");
+                } else {
+                    AnchorPane rootNode = FXMLLoader.load(this.getClass().getResource("/view/codinaterDashbord.fxml"));
+
+                    Scene scene = new Scene(rootNode);
+
+                    Stage stage = (Stage) this.rootNode.getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.centerOnScreen();
+                    stage.setTitle("Dashboard Form");
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check Username and password !!").show();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+
+            txtPassword.clear();
+        } catch(IOException e){
+                throw new RuntimeException(e);
+            }
         }
-    }
+
 
     @FXML
     void linkFrogetPasswordOnAction(ActionEvent event) {
@@ -83,5 +106,6 @@ public class LoginController {
 
         }
     }
+
 
 }

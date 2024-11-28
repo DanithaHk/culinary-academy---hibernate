@@ -73,12 +73,12 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="529.0" layoutY="135.0" text="Course Name:">
+        <Label layoutX="529.0" layoutY="135.0" text="Course ID:">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TextField fx:id="txtFee" layoutX="528.0" layoutY="219.0" prefHeight="30.0" prefWidth="250.0">
+        <TextField fx:id="txtFee" layoutX="529.0" layoutY="277.0" prefHeight="30.0" prefWidth="250.0">
             <cursor>
                 <Cursor fx:constant="DEFAULT" />
             </cursor>
@@ -107,24 +107,12 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <Label layoutX="532.0" layoutY="195.0" text="Total Fee:">
+        <Label layoutX="533.0" layoutY="253.0" text="Total Fee:">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Label>
-        <TableView fx:id="tblEnrolment" layoutX="47.0" layoutY="328.0" prefHeight="245.0" prefWidth="933.0">
-            <columns>
-                <TableColumn fx:id="colEnrolmentId" prefWidth="94.0" text="Enrolment Id" />
-                <TableColumn fx:id="colStudentId" prefWidth="100.0" text="Student Id" />
-                <TableColumn fx:id="colStudentName" prefWidth="144.0" text="Student Name" />
-                <TableColumn fx:id="colCourseName" prefWidth="147.0" text="Course Name" />
-                <TableColumn fx:id="colDate" prefWidth="92.0" text="Date " />
-                <TableColumn fx:id="colTotalFee" prefWidth="123.0" text="Total Fee" />
-            <TableColumn fx:id="colUpfrontPayment" prefWidth="123.0" text="Upfront Payment" />
-            <TableColumn fx:id="colComent" prefWidth="109.0" text="Coment" />
-            </columns>
-        </TableView>
-        <ComboBox fx:id="cmbCourseName" layoutX="528.0" layoutY="154.0" prefHeight="30.0" prefWidth="250.0" />
+        <ComboBox fx:id="cmbCourseId" layoutX="528.0" layoutY="154.0" onAction="#handleCourse" prefHeight="30.0" prefWidth="250.0" />
       <TextField fx:id="txtDate" layoutX="139.0" layoutY="217.0" prefHeight="30.0" prefWidth="250.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -136,7 +124,7 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <ComboBox fx:id="cmbStudentId" layoutX="528.0" layoutY="89.0" prefHeight="30.0" prefWidth="250.0" />
+      <ComboBox fx:id="cmbStudentId" layoutX="528.0" layoutY="89.0" onAction="#handleStudent" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="140.0" layoutY="255.0" text="Upfront Payment:">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -153,12 +141,12 @@
             <Insets />
          </opaqueInsets>
       </TextField>
-      <Label layoutX="529.0" layoutY="255.0" text="Coment:">
+      <Label layoutX="140.0" layoutY="317.0" text="Coment:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txtComment" layoutX="528.0" layoutY="275.0" prefHeight="30.0" prefWidth="250.0">
+      <TextField fx:id="txtComment" layoutX="139.0" layoutY="337.0" prefHeight="30.0" prefWidth="250.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -166,5 +154,33 @@
             <Font size="10.0" />
          </font>
       </TextField>
+      <Label layoutX="529.0" layoutY="194.0" text="Coursename:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtcourseName" layoutX="528.0" layoutY="216.0" prefHeight="30.0" prefWidth="250.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <font>
+            <Font size="10.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TextField>
+      <TableView fx:id="tblEnrollment" layoutX="31.0" layoutY="382.0" prefHeight="186.0" prefWidth="966.0">
+         <columns>
+            <TableColumn fx:id="colEnrollmentId" prefWidth="91.99996566772461" text="Enrollment Id" />
+            <TableColumn fx:id="colStudentId" prefWidth="104.79995727539062" text="Student Id" />
+            <TableColumn fx:id="colStudentName" prefWidth="145.59999084472656" text="Student Name" />
+            <TableColumn fx:id="colProgramId" prefWidth="108.79998779296875" text="Program Id" />
+            <TableColumn fx:id="colProgram" prefWidth="151.20001220703125" text="Program" />
+            <TableColumn fx:id="colDate" prefWidth="94.39996337890625" text="Date" />
+            <TableColumn fx:id="colTotalFee" prefWidth="112.00006103515625" text="Remaining Fee" />
+            <TableColumn fx:id="colUpfrontFee" prefWidth="157.59991455078125" text="Upfront Fee" />
+         </columns>
+      </TableView>
     </children>
 </AnchorPane>

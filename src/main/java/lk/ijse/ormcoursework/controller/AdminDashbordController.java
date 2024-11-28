@@ -86,8 +86,16 @@ public class AdminDashbordController {
     }
 
     @FXML
-    void btnExpensesOnAction(ActionEvent event) {
-
+    void btnExpensesOnAction(ActionEvent event) throws IOException {
+        URL resource = getClass().getResource("/view/enrollment.fxml");
+        assert resource != null;
+        Parent load = FXMLLoader.load(resource);
+        Load.getChildren().clear();
+        Load.getChildren().add(load);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), Load);
+        transition.setFromX(load.getScene().getWidth());
+        transition.setToX(0);
+        transition.play();
     }
 
     @FXML
@@ -101,8 +109,16 @@ public class AdminDashbordController {
     }
 
     @FXML
-    void btnPaymentOnAction(ActionEvent event) {
-
+    void btnPaymentOnAction(ActionEvent event) throws IOException {
+        URL resource = getClass().getResource("/view/payment.fxml");
+        assert resource != null;
+        Parent load = FXMLLoader.load(resource);
+        Load.getChildren().clear();
+        Load.getChildren().add(load);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(1), Load);
+        transition.setFromX(load.getScene().getWidth());
+        transition.setToX(0);
+        transition.play();
     }
 
     @FXML

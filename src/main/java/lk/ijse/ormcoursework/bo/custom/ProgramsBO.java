@@ -13,4 +13,7 @@ public interface ProgramsBO extends SuperBO {
     boolean delete(String id)throws SQLException, ClassNotFoundException;
     Programs search(String programCode) throws SQLException;
     List<ProgramsDto> getAllPrograms() throws SQLException, ClassNotFoundException;
+    List<String> getAllProgramIds() throws SQLException, ClassNotFoundException;
+
+    Programs getProgramById(String selectedProgramId);
 }

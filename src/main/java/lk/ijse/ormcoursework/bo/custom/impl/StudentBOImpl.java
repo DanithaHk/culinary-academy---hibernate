@@ -53,4 +53,20 @@ public class StudentBOImpl implements StudentBO {
     public String generateNewId() {
         return null;
     }
+
+    @Override
+    public List<String> getAllStudentIds() throws SQLException, ClassNotFoundException {
+        List<String> studentIds = new ArrayList<>();
+        List<Student> students = studentDAO.getAll();
+        for (Student student : students) {
+            studentIds.add(student.getId());
+        }
+        return studentIds;
+    }
+
+    @Override
+    public Student getStudentById(String selectedStudentId) {
+        return studentDAO.getStudentById(selectedStudentId);
+
+    }
 }

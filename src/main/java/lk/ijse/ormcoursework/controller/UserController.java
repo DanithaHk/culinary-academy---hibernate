@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.ormcoursework.Utill.PasswordEncrypt;
+import lk.ijse.ormcoursework.Utill.PasswordVerifier;
 import lk.ijse.ormcoursework.bo.BOFactory;
 import lk.ijse.ormcoursework.bo.custom.UserBO;
 import lk.ijse.ormcoursework.dto.UserDto;
@@ -132,22 +133,26 @@ public class UserController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, IOException, ClassNotFoundException {
-        String encryptedrePassword = PasswordEncrypt.hashPassword(txtPassword.getText());
+        String id = txtId.getText();
+        String name = txtName.getText();
+        String password = txtPassword.getText();
+        String role =  cmbRole.getValue();
 
-        boolean isSaved = userBO.save(new UserDto(
-                txtId.getText(),
-                txtName.getText(),
-                encryptedrePassword,
-                (String) cmbRole.getValue()
-        ));
-        if (isSaved) {
-            loadAllUsers();
-            clearFields();
-            new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+            boolean isSaved = userBO.save(new UserDto(
+                    id,
+                    name,
+                    password,
+                    role
+            ));
+            if (isSaved) {
+                loadAllUsers();
+                clearFields();
+                new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+            }
         }
-    }
+
 
     private void clearFields() {
         txtId.clear();

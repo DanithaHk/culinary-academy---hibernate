@@ -1,8 +1,6 @@
 package lk.ijse.ormcoursework.dao;
 
-import lk.ijse.ormcoursework.dao.Custom.impl.ProgramsDAOImpl;
-import lk.ijse.ormcoursework.dao.Custom.impl.StudentDAOImpl;
-import lk.ijse.ormcoursework.dao.Custom.impl.UserDAOImpl;
+import lk.ijse.ormcoursework.dao.Custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;
@@ -15,7 +13,7 @@ public class DAOFactory {
     }
 
     public enum DAOTypes {
-        USER,STUDENT,PROGRAMS
+        USER,STUDENT,PROGRAMS,ENROLLMENT,PAYMENT
     }
 
     public SuperDao getDAO(DAOTypes types) {
@@ -26,6 +24,11 @@ public class DAOFactory {
                 return new StudentDAOImpl();
             case PROGRAMS:
                 return new ProgramsDAOImpl();
+            case ENROLLMENT:
+                return new EnrollmentDAOImpl();
+            case PAYMENT:
+                return new PaymentDAOImpl();
+
             default:
                 return null;
         }

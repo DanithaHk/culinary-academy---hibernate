@@ -1,5 +1,8 @@
 package lk.ijse.ormcoursework.controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import lk.ijse.ormcoursework.bo.BOFactory;
 import lk.ijse.ormcoursework.bo.custom.StudentBO;
 import lk.ijse.ormcoursework.dto.StudentDto;
@@ -16,6 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class RejistretionController {
 
@@ -145,20 +150,23 @@ public class RejistretionController {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) throws SQLException, ClassNotFoundException {
-        boolean isSaved = studentBO.save(new StudentDto(
-                txtId.getText(),
-                txtName.getText(),
-                txtAddress.getText(),
-                txtContact.getText(),
-                btnDOB.getValue(),
-                (String) cmbGender.getValue()
-        ));
-        if (isSaved) {
-            loadAllStudents();
-            clearFields();
-            new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+        boolean isValidate = validateRejister();
+        if (isValidate) {
+            boolean isSaved = studentBO.save(new StudentDto(
+                    txtId.getText(),
+                    txtName.getText(),
+                    txtAddress.getText(),
+                    txtContact.getText(),
+                    btnDOB.getValue(),
+                    (String) cmbGender.getValue()
+            ));
+            if (isSaved) {
+                loadAllStudents();
+                clearFields();
+                new Alert(Alert.AlertType.CONFIRMATION, "User Saved").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "User UnSaved").show();
+            }
         }
     }
 
@@ -193,6 +201,83 @@ public class RejistretionController {
     void txtSearchOnAction(ActionEvent event) {
 
     }
+    private boolean validateRejister() {
+        int num=0;
+        String id = txtId.getText();
+        boolean isIDValidate= Pattern.matches("[0-9]{2,7}",id);
+        if (!isIDValidate){
+            num=1;
+            vibrateTextField(txtId);
+        }
 
+        String name=txtName.getText();
+        boolean isNameValidate= Pattern.matches("[A-z]{3,}",name);
+        if (!isNameValidate){
+            num=1;
+            vibrateTextField(txtName);
+        }
+
+        String address=txtAddress.getText();
+        boolean isAddressValidate= Pattern.matches("[A-z]{3,}",address);
+        if (!isAddressValidate){
+            num=1;
+            vibrateTextField(txtAddress);
+        }
+
+
+        String contact=txtContact.getText();
+        boolean isContactValidate= Pattern.matches("[0-9]{10}",contact);
+        if (!isContactValidate){
+            num=1;
+            vibrateTextField(txtContact);
+        }
+
+//        String dob= String.valueOf(btnDOB.getValue());
+//        boolean isDobValidate= Pattern.matches("[0-9]{10}",dob);
+//        if (!isDobValidate){
+//            num=1;
+//            vibrateTextField(btnDOB.getEditor());
+//        }
+
+        String gender= String.valueOf(cmbGender.getValue());
+        boolean isGenderValidate= Pattern.matches("[A-z /]{2,}",gender);
+        if (!isGenderValidate){
+            num=1;
+            vibrateTextField(btnDOB.getEditor());
+        }
+
+        if(num==1){
+            num=0;
+            return false;
+        }else {
+            num=0;
+            return true;
+
+        }
+    }
+
+    private void vibrateTextField(TextField textField) {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(0), new KeyValue(textField.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(50), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(100), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(150), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(200), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(250), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(300), new KeyValue(textField.translateXProperty(), 6)),
+                new KeyFrame(Duration.millis(350), new KeyValue(textField.translateXProperty(), -6)),
+                new KeyFrame(Duration.millis(400), new KeyValue(textField.translateXProperty(), 0))
+
+        );
+
+        textField.setStyle("-fx-border-color: red;");
+        timeline.play();
+
+        Timeline timeline1 = new Timeline(
+                new KeyFrame(Duration.seconds(3), new KeyValue(textField.styleProperty(), "-fx-border-color: #bde0fe;"))
+        );
+
+        timeline1.play();
+    }
 
 }

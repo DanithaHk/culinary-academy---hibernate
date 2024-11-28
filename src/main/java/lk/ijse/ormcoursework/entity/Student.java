@@ -3,6 +3,8 @@ package lk.ijse.ormcoursework.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -25,6 +27,19 @@ public class Student {
 
     @Column(name = "gender")
     private String gender;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,fetch = FetchType.EAGER,orphanRemoval = true)
+    private List<Enrollment> enrollmentList = new ArrayList<>();
+
+    public void addEnrollment(Enrollment enrollment) {
+        enrollmentList.add(enrollment);
+        enrollment.setStudent(this);
+    }
+
+    public void removeEnrollment(Enrollment enrollment) {
+        enrollmentList.remove(enrollment);
+        enrollment.setStudent(null);
+    }
 
     public Student() {
     }
@@ -85,6 +100,8 @@ public class Student {
     public void setGender(String gender) {
         this.gender = gender;
     }
+
+
 
     @Override
     public String toString() {

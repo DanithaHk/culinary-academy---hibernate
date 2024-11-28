@@ -6,12 +6,12 @@ ProgramsDto {
     private String id;
     private String name;
     private String duration;
-    private String fee;
+    private Double fee;
 
     public ProgramsDto() {
     }
 
-    public ProgramsDto(String id, String name, String duration, String fee) {
+    public ProgramsDto(String id, String name, String duration, Double fee) {
         this.id = id;
         this.name = name;
         this.duration = duration;
@@ -42,11 +42,11 @@ ProgramsDto {
         this.duration = duration;
     }
 
-    public String getFee() {
+    public Double getFee() {
         return fee;
     }
 
-    public void setFee(String fee) {
+    public void setFee(Double fee) {
         this.fee = fee;
     }
 

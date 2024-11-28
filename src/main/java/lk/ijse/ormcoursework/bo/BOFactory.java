@@ -1,8 +1,6 @@
 package lk.ijse.ormcoursework.bo;
 
-import lk.ijse.ormcoursework.bo.custom.impl.ProgramsBOImpl;
-import lk.ijse.ormcoursework.bo.custom.impl.StudentBOImpl;
-import lk.ijse.ormcoursework.bo.custom.impl.UserBOImpl;
+import lk.ijse.ormcoursework.bo.custom.impl.*;
 
 public class BOFactory {
     private static BOFactory bOFactory;
@@ -13,7 +11,7 @@ public class BOFactory {
     }
 
     public enum BOTypes{
-        USER,STUDENT,PROGRAMS
+        USER,STUDENT,PROGRAMS,ENROLLMENT,PAYMENT
     }
 
     public SuperBO getBO(BOTypes boTypes){
@@ -24,6 +22,10 @@ public class BOFactory {
                 return new StudentBOImpl();
             case PROGRAMS:
                 return new ProgramsBOImpl();
+            case ENROLLMENT:
+                return new EnrollmentBOImpl();
+            case PAYMENT:
+                return new PaymentBOImpl();
             default:
                 return null;
         }

@@ -5,4 +5,6 @@ import lk.ijse.ormcoursework.dao.CrudDAO;
 
 
 public interface ProgramsDAO extends CrudDAO<Programs> {
+    Programs getProgramById(String courseId);
+
 }

@@ -50,7 +50,7 @@ public class ProgramsDAOImpl implements ProgramsDAO {
 
         String sql = "DELETE FROM programs WHERE program_id = :id";
         NativeQuery<Programs> nativeQuery = session.createNativeQuery(sql);
-        nativeQuery.setParameter("id",id);
+        nativeQuery.setParameter("id", id);
         nativeQuery.executeUpdate();
 
         transaction.commit();
@@ -62,4 +62,24 @@ public class ProgramsDAOImpl implements ProgramsDAO {
     public Programs search(String id) {
         return null;
     }
+
+    @Override
+    public Programs getProgramById(String courseId) {
+        Session session = SessionFactoryConfig.getInstance().getSession();
+        Transaction tx = session.beginTransaction();
+
+        try {
+            // Fetch the course object based on the ID
+            Programs programs = session.get(Programs.class, courseId);
+            tx.commit();  // Commit the transaction
+            return programs;
+        } catch (Exception e) {
+            tx.rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
 }
+
+

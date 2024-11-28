@@ -65,7 +65,7 @@ public class CoursesController {
         txtId.setText(newValue.getId());
         txtName.setText(newValue.getName());
         txtDuration.setText(newValue.getDuration());
-        txtFee.setText(newValue.getFee());
+        txtFee.setText(String.valueOf(newValue.getFee()));
     }
 
     private void loadAllPrograms() {
@@ -128,7 +128,7 @@ public class CoursesController {
                 txtId.getText(),
                 txtName.getText(),
                 txtDuration.getText(),
-                txtFee.getText()
+                Double.valueOf(txtFee.getText())
         ));
         if (isSaved) {
             loadAllPrograms();
@@ -151,7 +151,7 @@ public class CoursesController {
         String pid=txtId.getText();
         String name = txtName.getText();
         String duration = txtDuration.getText();
-        String fee = txtFee.getText();
+        Double fee = Double.valueOf(txtFee.getText());
 
         if(programsBO.update(new ProgramsDto(pid,name,duration,fee))){
             new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully!!").show();
